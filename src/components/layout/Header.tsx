@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown, Menu, Search, ShoppingCart, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -10,11 +10,13 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import SearchBar from "@/components/ui/SearchBar";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,6 +78,12 @@ const Header = () => {
                   <Link to="/category/automation" className="w-full">Business Automation</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
+                  <Link to="/category/healthcare" className="w-full">Healthcare & Medical</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to="/category/content" className="w-full">Content Generators</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                   <Link to="/category/all" className="w-full">View All Categories</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -106,32 +114,47 @@ const Header = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="hidden md:flex" 
-            aria-label="Search"
-          >
-            <Search className="h-5 w-5" />
-          </Button>
+          <div className="hidden md:block">
+            <SearchBar expanded={false} />
+          </div>
           
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="relative" 
-            aria-label="Cart"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-medium">
-              2
-            </span>
-          </Button>
+          <Link to="/cart">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative" 
+              aria-label="Cart"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-medium">
+                2
+              </span>
+            </Button>
+          </Link>
           
-          <Avatar className="hidden md:flex">
-            <AvatarFallback className="bg-blue-100 text-blue-800">
-              <User className="h-4 w-4" />
-            </AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="hidden md:flex cursor-pointer">
+                <AvatarFallback className="bg-blue-100 text-blue-800">
+                  <User className="h-4 w-4" />
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem>
+                <Link to="/profile" className="w-full">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/profile?tab=orders" className="w-full">Orders</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/profile?tab=settings" className="w-full">Settings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600">
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           
           <Button 
             variant="ghost" 
@@ -149,6 +172,10 @@ const Header = () => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 glass shadow-md py-4 animate-slide-down">
           <div className="container mx-auto px-4">
+            <div className="mb-4">
+              <SearchBar expanded={true} />
+            </div>
+            
             <nav className="flex flex-col space-y-2">
               <Link 
                 to="/" 
@@ -162,9 +189,9 @@ const Header = () => {
                 Home
               </Link>
               <Link 
-                to="/categories" 
+                to="/category/all" 
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/categories') 
+                  location.pathname.includes('/category') 
                     ? 'text-blue-600 bg-blue-50' 
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                 }`}
@@ -210,6 +237,14 @@ const Header = () => {
                 >
                   <User className="mr-2 h-4 w-4" />
                   Profile
+                </Link>
+                <Link 
+                  to="/cart" 
+                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  Cart
                 </Link>
               </div>
             </nav>

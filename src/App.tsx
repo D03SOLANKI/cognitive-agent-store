@@ -12,6 +12,29 @@ import Developers from "./pages/Developers";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
+// Developer pages
+import SubmitAgent from "./pages/developers/SubmitAgent";
+import Documentation from "./pages/developers/Documentation";
+import ApiSdk from "./pages/developers/ApiSdk";
+import Guidelines from "./pages/developers/Guidelines";
+import Support from "./pages/developers/Support";
+
+// Company pages
+import Careers from "./pages/company/Careers";
+import Blog from "./pages/company/Blog";
+import PrivacyPolicy from "./pages/company/PrivacyPolicy";
+import TermsOfService from "./pages/company/TermsOfService";
+import Contact from "./pages/company/Contact";
+import Cookies from "./pages/company/Cookies";
+
+// User pages
+import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
+
+// Category pages
+import HealthcarePage from "./pages/HealthcarePage";
+import ContentPage from "./pages/ContentPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -21,13 +44,38 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Main routes */}
           <Route path="/" element={<Index />} />
           <Route path="/agent/:id" element={<AgentDetails />} />
           <Route path="/search" element={<Search />} />
+          
+          {/* Category routes */}
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/category/healthcare" element={<HealthcarePage />} />
+          <Route path="/category/content" element={<ContentPage />} />
+          
+          {/* Developer routes */}
           <Route path="/developers" element={<Developers />} />
+          <Route path="/developers/submit" element={<SubmitAgent />} />
+          <Route path="/developers/docs" element={<Documentation />} />
+          <Route path="/developers/api" element={<ApiSdk />} />
+          <Route path="/developers/guidelines" element={<Guidelines />} />
+          <Route path="/developers/support" element={<Support />} />
+          
+          {/* Company routes */}
           <Route path="/about" element={<About />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cookies" element={<Cookies />} />
+          
+          {/* User routes */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
+          
+          {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
