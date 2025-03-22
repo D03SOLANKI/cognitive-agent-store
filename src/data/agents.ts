@@ -1,171 +1,190 @@
+import { Agent, AgentCategory, PricingModel } from '@/types/agent';
 
-import { Agent, AgentCategory } from "../types/agent";
-
-export const agentCategories: { id: AgentCategory; name: string; icon: string; count: number }[] = [
-  { id: 'All', name: 'All Agents', icon: '🔍', count: 120 },
-  { id: 'Assistant', name: 'Virtual Assistants', icon: '🤖', count: 28 },
-  { id: 'Chatbot', name: 'Chatbots', icon: '💬', count: 34 },
-  { id: 'Trading', name: 'Trading & Investment', icon: '📈', count: 15 },
-  { id: 'Automation', name: 'Business Automation', icon: '⚙️', count: 22 },
-  { id: 'Healthcare', name: 'Healthcare & Medical', icon: '🏥', count: 18 },
-  { id: 'Content', name: 'Content Generators', icon: '✍️', count: 26 },
-  { id: 'Security', name: 'Cybersecurity', icon: '🔒', count: 12 },
-  { id: 'Education', name: 'Education & Learning', icon: '🎓', count: 17 },
-  { id: 'Analytics', name: 'Data Analytics', icon: '📊', count: 19 }
-];
-
-export const agents: Agent[] = [
+const agents: Agent[] = [
   {
     id: '1',
-    name: 'AskAI Assistant Pro',
-    description: 'A sophisticated AI assistant that can help with a wide range of tasks, from answering questions to managing schedules and automating workflows. Built with the latest natural language processing technology, AskAI Assistant Pro understands context, remembers past interactions, and learns from user preferences to provide increasingly personalized assistance over time.',
-    shortDescription: 'Your personal AI assistant for work and life',
+    name: 'Jarvis AI',
+    description: `Jarvis AI is your personal AI assistant, designed to help you manage your day, answer questions, and automate tasks. With advanced natural language processing and machine learning capabilities, Jarvis AI adapts to your needs and provides personalized support.`,
+    shortDescription: 'Your personal AI assistant for managing tasks and answering questions.',
     category: 'Assistant',
     pricing: {
       model: 'Subscription',
-      amount: 9.99,
+      amount: 19.99,
       currency: 'USD',
-      period: 'month'
+      period: 'month',
     },
     rating: 4.8,
-    reviewCount: 2345,
-    developer: 'AskAI Technologies',
-    tags: ['personal assistant', 'productivity', 'workflow', 'scheduling'],
-    imageUrl: '/placeholder.svg',
+    reviewCount: 124,
+    developer: 'Stark Industries',
+    tags: ['assistant', 'productivity', 'automation', 'nlp'],
+    imageUrl: '/images/agents/jarvis.jpg',
     featured: true,
-    popular: true
   },
   {
     id: '2',
-    name: 'TradeGenius',
-    description: 'TradeGenius is an advanced AI trading bot that analyzes market trends, executes trades, and manages investment portfolios with minimal human intervention. Using sophisticated algorithms and machine learning, it constantly adapts its strategies based on market conditions to maximize returns while managing risk.',
-    shortDescription: 'AI-powered trading bot for smart investments',
-    category: 'Trading',
+    name: 'MediBot',
+    description: `MediBot is an AI-powered chatbot designed to provide quick and accurate medical information. It can answer health-related questions, provide symptom analysis, and offer guidance on when to seek professional medical help. MediBot is not a substitute for a doctor, but it can be a helpful tool for preliminary health inquiries.`,
+    shortDescription: 'AI-powered chatbot for medical information and symptom analysis.',
+    category: 'Healthcare',
     pricing: {
-      model: 'Freemium',
-      amount: 19.99,
+      model: 'Free',
+      amount: 0,
       currency: 'USD',
-      period: 'month'
     },
     rating: 4.5,
-    reviewCount: 1289,
-    developer: 'FinTech Innovations',
-    tags: ['trading', 'finance', 'investments', 'stocks'],
-    imageUrl: '/placeholder.svg',
-    popular: true
+    reviewCount: 89,
+    developer: 'OsCorp',
+    tags: ['healthcare', 'chatbot', 'medical', 'information'],
+    imageUrl: '/images/agents/medibot.jpg',
+    popular: true,
   },
   {
     id: '3',
-    name: 'ContentCraft AI',
-    description: 'Generate high-quality, SEO-optimized content for blogs, social media, and marketing materials with ContentCraft AI. This powerful content generator uses advanced natural language processing to create engaging, original text that resonates with your target audience, saving you hours of writing time.',
-    shortDescription: 'Generate engaging content for all platforms',
-    category: 'Content',
-    pricing: {
-      model: 'Pay-per-use',
-      amount: 0.02,
-      currency: 'USD',
-      period: 'word'
-    },
-    rating: 4.7,
-    reviewCount: 1876,
-    developer: 'Digital Content Solutions',
-    tags: ['content', 'writing', 'SEO', 'marketing'],
-    imageUrl: '/placeholder.svg',
-    featured: true
-  },
-  {
-    id: '4',
-    name: 'MedAssist AI',
-    description: 'MedAssist AI helps healthcare providers analyze medical records, identify potential diagnoses, and recommend treatment plans based on the latest medical research. It streamlines patient care by processing vast amounts of medical data quickly and accurately, allowing doctors to make more informed decisions.',
-    shortDescription: 'AI diagnostics assistant for healthcare professionals',
-    category: 'Healthcare',
-    pricing: {
-      model: 'Subscription',
-      amount: 199.99,
-      currency: 'USD',
-      period: 'month'
-    },
-    rating: 4.9,
-    reviewCount: 942,
-    developer: 'HealthTech Innovations',
-    tags: ['healthcare', 'diagnostics', 'medical', 'patient care'],
-    imageUrl: '/placeholder.svg',
-    new: true
-  },
-  {
-    id: '5',
-    name: 'CyberSentinel',
-    description: 'CyberSentinel provides real-time threat detection and protection for your digital assets. Using advanced AI algorithms, it identifies potential security breaches, unusual network activity, and vulnerability points in your systems, then automatically implements countermeasures to keep your data safe.',
-    shortDescription: 'AI-powered cybersecurity protection',
-    category: 'Security',
+    name: 'AlgoTrade',
+    description: `AlgoTrade is an AI agent specializing in algorithmic trading. It analyzes market trends, identifies profitable opportunities, and executes trades automatically. AlgoTrade is designed for both novice and experienced traders looking to leverage AI for better investment outcomes.`,
+    shortDescription: 'AI agent for algorithmic trading and investment analysis.',
+    category: 'Trading',
     pricing: {
       model: 'Subscription',
       amount: 49.99,
       currency: 'USD',
-      period: 'month'
-    },
-    rating: 4.6,
-    reviewCount: 1047,
-    developer: 'CyberDefense Systems',
-    tags: ['security', 'cybersecurity', 'protection', 'threat detection'],
-    imageUrl: '/placeholder.svg'
-  },
-  {
-    id: '6',
-    name: 'EduMentor AI',
-    description: 'EduMentor AI creates personalized learning experiences for students of all ages, adapting to individual learning styles, pace, and preferences. It provides interactive lessons, exercises, and quizzes, then analyzes performance data to focus on areas that need improvement, making education more effective and engaging.',
-    shortDescription: 'Personalized AI tutor for continuous learning',
-    category: 'Education',
-    pricing: {
-      model: 'Freemium',
-      amount: 12.99,
-      currency: 'USD',
-      period: 'month'
+      period: 'month',
     },
     rating: 4.7,
-    reviewCount: 1532,
-    developer: 'EdTech Solutions',
-    tags: ['education', 'learning', 'tutoring', 'personal development'],
-    imageUrl: '/placeholder.svg',
-    popular: true
+    reviewCount: 62,
+    developer: 'Wayne Enterprises',
+    tags: ['trading', 'investment', 'finance', 'algorithm'],
+    imageUrl: '/images/agents/algotrade.jpg',
+    new: true,
   },
   {
-    id: '7',
-    name: 'BusinessBot',
-    description: 'BusinessBot automates routine business tasks like scheduling, customer inquiries, invoice processing, and data entry. This versatile automation agent integrates with your existing software systems to streamline workflows, reduce manual errors, and free up your team to focus on higher-value tasks.',
-    shortDescription: 'Business process automation for efficiency',
+    id: '4',
+    name: 'AutoMate',
+    description: `AutoMate is an AI automation tool that helps streamline your business processes. It can automate tasks such as data entry, email management, and report generation. AutoMate integrates with popular business software to enhance productivity and reduce manual workload.`,
+    shortDescription: 'AI automation tool for streamlining business processes and enhancing productivity.',
     category: 'Automation',
     pricing: {
       model: 'Subscription',
       amount: 29.99,
       currency: 'USD',
-      period: 'month'
+      period: 'month',
+    },
+    rating: 4.6,
+    reviewCount: 112,
+    developer: 'LexCorp',
+    tags: ['automation', 'productivity', 'business', 'integration'],
+    imageUrl: '/images/agents/automate.jpg',
+  },
+  {
+    id: '5',
+    name: 'ContentGenius',
+    description: `ContentGenius is an AI content creation tool that generates high-quality articles, blog posts, and marketing copy. It uses advanced NLP techniques to understand your topic and create engaging content that resonates with your audience.`,
+    shortDescription: 'AI content creation tool for generating high-quality articles and marketing copy.',
+    category: 'Content',
+    pricing: {
+      model: 'Freemium',
+      amount: 9.99,
+      currency: 'USD',
+      period: 'month',
     },
     rating: 4.4,
-    reviewCount: 876,
-    developer: 'Automation Enterprises',
-    tags: ['business', 'automation', 'workflow', 'productivity'],
-    imageUrl: '/placeholder.svg'
+    reviewCount: 75,
+    developer: 'Cyberdyne Systems',
+    tags: ['content', 'writing', 'marketing', 'nlp'],
+    imageUrl: '/images/agents/contentgenius.jpg',
+  },
+  {
+    id: '6',
+    name: 'SecureAI',
+    description: `SecureAI is an AI-powered security agent that protects your systems from cyber threats. It uses machine learning to detect anomalies, prevent intrusions, and ensure data integrity. SecureAI is essential for businesses looking to safeguard their digital assets.`,
+    shortDescription: 'AI-powered security agent for protecting systems from cyber threats.',
+    category: 'Security',
+    pricing: {
+      model: 'Subscription',
+      amount: 79.99,
+      currency: 'USD',
+      period: 'month',
+    },
+    rating: 4.9,
+    reviewCount: 98,
+    developer: 'Umbrella Corp',
+    tags: ['security', 'cybersecurity', 'threat detection', 'machine learning'],
+    imageUrl: '/images/agents/secureai.jpg',
+    featured: true,
+  },
+  {
+    id: '7',
+    name: 'EduBot',
+    description: `EduBot is an AI tutor designed to help students learn and excel in their studies. It provides personalized lessons, answers questions, and offers feedback on assignments. EduBot covers a wide range of subjects and is suitable for students of all ages.`,
+    shortDescription: 'AI tutor for personalized learning and academic support.',
+    category: 'Education',
+    pricing: {
+      model: 'Freemium',
+      amount: 0,
+      currency: 'USD',
+    },
+    rating: 4.6,
+    reviewCount: 105,
+    developer: 'Globex Corporation',
+    tags: ['education', 'tutoring', 'learning', 'personalized'],
+    imageUrl: '/images/agents/edubot.jpg',
+    popular: true,
   },
   {
     id: '8',
-    name: 'DataInsight Pro',
-    description: 'Transform raw data into actionable insights with DataInsight Pro. This advanced analytics agent processes large datasets, identifies patterns and trends, and presents findings through intuitive visualizations and reports, helping businesses make data-driven decisions quickly and confidently.',
-    shortDescription: 'Turn data into actionable business insights',
+    name: 'DataInsights',
+    description: `DataInsights is an AI analytics tool that helps businesses make data-driven decisions. It analyzes large datasets, identifies trends, and generates insightful reports. DataInsights is essential for businesses looking to optimize their performance and gain a competitive edge.`,
+    shortDescription: 'AI analytics tool for data-driven decision-making and performance optimization.',
     category: 'Analytics',
     pricing: {
-      model: 'Pay-per-use',
-      amount: 0.05,
+      model: 'Subscription',
+      amount: 59.99,
       currency: 'USD',
-      period: 'MB'
+      period: 'month',
     },
-    rating: 4.8,
-    reviewCount: 754,
-    developer: 'Data Analytics Solutions',
-    tags: ['analytics', 'data science', 'business intelligence', 'reporting'],
-    imageUrl: '/placeholder.svg',
-    featured: true
-  }
+    rating: 4.7,
+    reviewCount: 82,
+    developer: 'Initech',
+    tags: ['analytics', 'data analysis', 'business intelligence', 'reporting'],
+    imageUrl: '/images/agents/datainsights.jpg',
+    new: true,
+  },
+  {
+    id: '9',
+    name: 'Chatty',
+    description: `Chatty is a versatile AI chatbot that can be customized for various applications. It can handle customer support, answer FAQs, and engage users in conversations. Chatty is easy to integrate into your website or app.`,
+    shortDescription: 'Versatile AI chatbot for customer support and user engagement.',
+    category: 'Chatbot',
+    pricing: {
+      model: 'Freemium',
+      amount: 4.99,
+      currency: 'USD',
+      period: 'month',
+    },
+    rating: 4.3,
+    reviewCount: 68,
+    developer: 'Acme Corporation',
+    tags: ['chatbot', 'customer support', 'engagement', 'integration'],
+    imageUrl: '/images/agents/chatty.jpg',
+  },
+  {
+    id: '10',
+    name: 'HealthAssist',
+    description: `HealthAssist is an AI assistant designed to help individuals manage their health and wellness. It can track fitness goals, provide personalized health advice, and schedule appointments with healthcare providers. HealthAssist is your partner in achieving a healthier lifestyle.`,
+    shortDescription: 'AI assistant for managing health and wellness, tracking fitness goals, and scheduling appointments.',
+    category: 'Healthcare',
+    pricing: {
+      model: 'Subscription',
+      amount: 24.99,
+      currency: 'USD',
+      period: 'month',
+    },
+    rating: 4.5,
+    reviewCount: 93,
+    developer: 'Tyrell Corporation',
+    tags: ['healthcare', 'wellness', 'fitness', 'assistant'],
+    imageUrl: '/images/agents/healthassist.jpg',
+  },
 ];
 
 export const getFeaturedAgents = (): Agent[] => {
@@ -173,24 +192,202 @@ export const getFeaturedAgents = (): Agent[] => {
 };
 
 export const getPopularAgents = (): Agent[] => {
-  return agents.filter(agent => agent.popular).slice(0, 4);
+  return agents.filter(agent => agent.popular);
 };
 
-export const getAgentsByCategory = (category: AgentCategory): Agent[] => {
-  if (category === 'All') return agents;
-  return agents.filter(agent => agent.category === category);
+export const getNewAgents = (): Agent[] => {
+  return agents.filter(agent => agent.new);
 };
 
 export const getAgentById = (id: string): Agent | undefined => {
   return agents.find(agent => agent.id === id);
 };
 
-export const searchAgents = (query: string): Agent[] => {
-  const lowerCaseQuery = query.toLowerCase();
-  return agents.filter(
-    agent => 
-      agent.name.toLowerCase().includes(lowerCaseQuery) ||
-      agent.description.toLowerCase().includes(lowerCaseQuery) ||
-      agent.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery))
-  );
+export const getAllAgents = (): Agent[] => {
+  return [
+    {
+      id: '1',
+      name: 'Jarvis AI',
+      description: `Jarvis AI is your personal AI assistant, designed to help you manage your day, answer questions, and automate tasks. With advanced natural language processing and machine learning capabilities, Jarvis AI adapts to your needs and provides personalized support.`,
+      shortDescription: 'Your personal AI assistant for managing tasks and answering questions.',
+      category: 'Assistant',
+      pricing: {
+        model: 'Subscription',
+        amount: 19.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.8,
+      reviewCount: 124,
+      developer: 'Stark Industries',
+      tags: ['assistant', 'productivity', 'automation', 'nlp'],
+      imageUrl: '/images/agents/jarvis.jpg',
+      featured: true,
+    },
+    {
+      id: '2',
+      name: 'MediBot',
+      description: `MediBot is an AI-powered chatbot designed to provide quick and accurate medical information. It can answer health-related questions, provide symptom analysis, and offer guidance on when to seek professional medical help. MediBot is not a substitute for a doctor, but it can be a helpful tool for preliminary health inquiries.`,
+      shortDescription: 'AI-powered chatbot for medical information and symptom analysis.',
+      category: 'Healthcare',
+      pricing: {
+        model: 'Free',
+        amount: 0,
+        currency: 'USD',
+      },
+      rating: 4.5,
+      reviewCount: 89,
+      developer: 'OsCorp',
+      tags: ['healthcare', 'chatbot', 'medical', 'information'],
+      imageUrl: '/images/agents/medibot.jpg',
+      popular: true,
+    },
+    {
+      id: '3',
+      name: 'AlgoTrade',
+      description: `AlgoTrade is an AI agent specializing in algorithmic trading. It analyzes market trends, identifies profitable opportunities, and executes trades automatically. AlgoTrade is designed for both novice and experienced traders looking to leverage AI for better investment outcomes.`,
+      shortDescription: 'AI agent for algorithmic trading and investment analysis.',
+      category: 'Trading',
+      pricing: {
+        model: 'Subscription',
+        amount: 49.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.7,
+      reviewCount: 62,
+      developer: 'Wayne Enterprises',
+      tags: ['trading', 'investment', 'finance', 'algorithm'],
+      imageUrl: '/images/agents/algotrade.jpg',
+      new: true,
+    },
+    {
+      id: '4',
+      name: 'AutoMate',
+      description: `AutoMate is an AI automation tool that helps streamline your business processes. It can automate tasks such as data entry, email management, and report generation. AutoMate integrates with popular business software to enhance productivity and reduce manual workload.`,
+      shortDescription: 'AI automation tool for streamlining business processes and enhancing productivity.',
+      category: 'Automation',
+      pricing: {
+        model: 'Subscription',
+        amount: 29.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.6,
+      reviewCount: 112,
+      developer: 'LexCorp',
+      tags: ['automation', 'productivity', 'business', 'integration'],
+      imageUrl: '/images/agents/automate.jpg',
+    },
+    {
+      id: '5',
+      name: 'ContentGenius',
+      description: `ContentGenius is an AI content creation tool that generates high-quality articles, blog posts, and marketing copy. It uses advanced NLP techniques to understand your topic and create engaging content that resonates with your audience.`,
+      shortDescription: 'AI content creation tool for generating high-quality articles and marketing copy.',
+      category: 'Content',
+      pricing: {
+        model: 'Freemium',
+        amount: 9.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.4,
+      reviewCount: 75,
+      developer: 'Cyberdyne Systems',
+      tags: ['content', 'writing', 'marketing', 'nlp'],
+      imageUrl: '/images/agents/contentgenius.jpg',
+    },
+    {
+      id: '6',
+      name: 'SecureAI',
+      description: `SecureAI is an AI-powered security agent that protects your systems from cyber threats. It uses machine learning to detect anomalies, prevent intrusions, and ensure data integrity. SecureAI is essential for businesses looking to safeguard their digital assets.`,
+      shortDescription: 'AI-powered security agent for protecting systems from cyber threats.',
+      category: 'Security',
+      pricing: {
+        model: 'Subscription',
+        amount: 79.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.9,
+      reviewCount: 98,
+      developer: 'Umbrella Corp',
+      tags: ['security', 'cybersecurity', 'threat detection', 'machine learning'],
+      imageUrl: '/images/agents/secureai.jpg',
+      featured: true,
+    },
+    {
+      id: '7',
+      name: 'EduBot',
+      description: `EduBot is an AI tutor designed to help students learn and excel in their studies. It provides personalized lessons, answers questions, and offers feedback on assignments. EduBot covers a wide range of subjects and is suitable for students of all ages.`,
+      shortDescription: 'AI tutor for personalized learning and academic support.',
+      category: 'Education',
+      pricing: {
+        model: 'Freemium',
+        amount: 0,
+        currency: 'USD',
+      },
+      rating: 4.6,
+      reviewCount: 105,
+      developer: 'Globex Corporation',
+      tags: ['education', 'tutoring', 'learning', 'personalized'],
+      imageUrl: '/images/agents/edubot.jpg',
+      popular: true,
+    },
+    {
+      id: '8',
+      name: 'DataInsights',
+      description: `DataInsights is an AI analytics tool that helps businesses make data-driven decisions. It analyzes large datasets, identifies trends, and generates insightful reports. DataInsights is essential for businesses looking to optimize their performance and gain a competitive edge.`,
+      shortDescription: 'AI analytics tool for data-driven decision-making and performance optimization.',
+      category: 'Analytics',
+      pricing: {
+        model: 'Subscription',
+        amount: 59.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.7,
+      reviewCount: 82,
+      developer: 'Initech',
+      tags: ['analytics', 'data analysis', 'business intelligence', 'reporting'],
+      imageUrl: '/images/agents/datainsights.jpg',
+      new: true,
+    },
+    {
+      id: '9',
+      name: 'Chatty',
+      description: `Chatty is a versatile AI chatbot that can be customized for various applications. It can handle customer support, answer FAQs, and engage users in conversations. Chatty is easy to integrate into your website or app.`,
+      shortDescription: 'Versatile AI chatbot for customer support and user engagement.',
+      category: 'Chatbot',
+      pricing: {
+        model: 'Freemium',
+        amount: 4.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.3,
+      reviewCount: 68,
+      developer: 'Acme Corporation',
+      tags: ['chatbot', 'customer support', 'engagement', 'integration'],
+      imageUrl: '/images/agents/chatty.jpg',
+    },
+    {
+      id: '10',
+      name: 'HealthAssist',
+      description: `HealthAssist is an AI assistant designed to help individuals manage their health and wellness. It can track fitness goals, provide personalized health advice, and schedule appointments with healthcare providers. HealthAssist is your partner in achieving a healthier lifestyle.`,
+      shortDescription: 'AI assistant for managing health and wellness, tracking fitness goals, and scheduling appointments.',
+      category: 'Healthcare',
+      pricing: {
+        model: 'Subscription',
+        amount: 24.99,
+        currency: 'USD',
+        period: 'month',
+      },
+      rating: 4.5,
+      reviewCount: 93,
+      developer: 'Tyrell Corporation',
+      tags: ['healthcare', 'wellness', 'fitness', 'assistant'],
+      imageUrl: '/images/agents/healthassist.jpg',
+    },
+  ];
 };

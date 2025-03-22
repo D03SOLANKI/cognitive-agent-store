@@ -30,8 +30,10 @@ const SearchBar = ({
     e.preventDefault();
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query)}`);
-      setIsExpanded(false);
-      setQuery('');
+      // Don't collapse on mobile when submitting to provide better UX
+      if (!expanded) {
+        setIsExpanded(false);
+      }
     }
   };
 
@@ -66,8 +68,8 @@ const SearchBar = ({
         <div 
           className={`search-glass flex items-center transition-all duration-300 ${
             isExpanded 
-              ? 'w-full rounded-full pl-4 pr-2 py-2 border-blue-200' 
-              : 'w-10 h-10 rounded-full justify-center cursor-pointer'
+              ? 'w-full rounded-full pl-4 pr-2 py-2 border border-blue-200' 
+              : 'w-10 h-10 rounded-full justify-center cursor-pointer bg-white/80 backdrop-blur-sm border border-slate-200'
           } ${isFocused ? 'ring-2 ring-blue-200' : ''}`}
           onClick={handleExpandToggle}
         >

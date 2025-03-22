@@ -55,6 +55,42 @@ const AgentDetails = () => {
     }
   };
 
+  const handleTryDemo = () => {
+    if (agent) {
+      toast({
+        title: "Demo Started",
+        description: `Starting demo for ${agent.name}`,
+      });
+    }
+  };
+
+  const handleShare = () => {
+    if (agent) {
+      toast({
+        title: "Share Link Copied",
+        description: `Link to ${agent.name} has been copied to clipboard`,
+      });
+    }
+  };
+
+  const handleSave = () => {
+    if (agent) {
+      toast({
+        title: "Agent Saved",
+        description: `${agent.name} has been added to your saved items`,
+      });
+    }
+  };
+
+  const handleContactDeveloper = () => {
+    if (agent) {
+      toast({
+        title: "Message Sent",
+        description: `Your message to the developer of ${agent.name} has been sent`,
+      });
+    }
+  };
+
   const formatPrice = (pricing?: Agent['pricing']) => {
     if (!pricing) return '';
     if (pricing.model === 'Free') return 'Free';
@@ -175,6 +211,7 @@ const AgentDetails = () => {
                         variant="outline"
                         size="icon"
                         aria-label="Share"
+                        onClick={handleShare}
                       >
                         <Share2 className="h-4 w-4" />
                       </Button>
@@ -182,6 +219,7 @@ const AgentDetails = () => {
                         variant="outline"
                         size="icon"
                         aria-label="Save"
+                        onClick={handleSave}
                       >
                         <Bookmark className="h-4 w-4" />
                       </Button>
@@ -305,6 +343,7 @@ const AgentDetails = () => {
                   <Button 
                     variant="outline" 
                     className="w-full h-12 text-base"
+                    onClick={handleTryDemo}
                   >
                     <Download className="mr-2 h-5 w-5" />
                     Try Demo
@@ -340,22 +379,25 @@ const AgentDetails = () => {
                 <div className="border-t border-slate-200 pt-6">
                   <h3 className="font-medium mb-4">Support Options</h3>
                   <div className="space-y-3">
-                    <a href="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
+                    <button 
+                      onClick={handleContactDeveloper}
+                      className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                    >
                       <MessageSquare className="h-4 w-4 mr-2" />
                       Contact Developer
-                    </a>
-                    <a href="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
+                    </button>
+                    <Link to="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
                       <AlertCircle className="h-4 w-4 mr-2" />
                       Report an Issue
-                    </a>
-                    <a href="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
+                    </Link>
+                    <Link to="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
                       <FileText className="h-4 w-4 mr-2" />
                       Documentation
-                    </a>
-                    <a href="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
+                    </Link>
+                    <Link to="#" className="flex items-center text-blue-600 hover:text-blue-800 text-sm">
                       <Tag className="h-4 w-4 mr-2" />
                       Terms of Service
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

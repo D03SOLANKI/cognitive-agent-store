@@ -1,11 +1,13 @@
 
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Categories from '@/components/home/Categories';
 import FeaturedAgents from '@/components/home/FeaturedAgents';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   useEffect(() => {
@@ -49,12 +51,12 @@ const Index = () => {
                   Join thousands of users leveraging AI agents to enhance productivity, automate tasks, and unlock new possibilities.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl hover:shadow-blue-200 transform hover:-translate-y-1 transition-all">
-                    Browse All Agents
-                  </button>
-                  <button className="px-8 py-3 bg-white text-blue-600 rounded-full font-medium border border-blue-200 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm">
-                    For Developers
-                  </button>
+                  <Button className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl hover:shadow-blue-200 transform hover:-translate-y-1 transition-all" asChild>
+                    <Link to="/search">Browse All Agents</Link>
+                  </Button>
+                  <Button className="px-8 py-3 bg-white text-blue-600 rounded-full font-medium border border-blue-200 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm" asChild>
+                    <Link to="/developers">For Developers</Link>
+                  </Button>
                 </div>
               </div>
             </div>
