@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import Header from '@/components/layout/Header';
@@ -21,6 +21,10 @@ import {
 } from 'lucide-react';
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const activeTab = searchParams.get('tab') || 'account';
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -45,6 +49,19 @@ const Profile = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("Profile information updated successfully!");
+  };
+
+  const handleSignOut = () => {
+    toast.success("You have been signed out successfully!");
+    // In a real app, you would clear authentication state here
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
+  };
+
+  // Navigate to a different tab
+  const navigateToTab = (tab: string) => {
+    navigate(`/profile?tab=${tab}`);
   };
 
   const orders = [
@@ -88,6 +105,50 @@ const Profile = () => {
     }
   ];
 
+  // View order details
+  const viewOrderDetails = (orderId: string) => {
+    toast.info(`Viewing details for order ${orderId}`);
+    // In a real app, you would navigate to the order details page or show a modal
+  };
+
+  // Handle payment method actions
+  const editPaymentMethod = (id: number) => {
+    toast.info(`Editing payment method #${id}`);
+    // In a real app, you would show a modal to edit the payment method
+  };
+
+  const removePaymentMethod = (id: number) => {
+    toast.success(`Payment method #${id} has been removed`);
+    // In a real app, you would remove the payment method from the state/database
+  };
+
+  const addPaymentMethod = () => {
+    toast.info("Adding a new payment method");
+    // In a real app, you would show a modal to add a new payment method
+  };
+
+  // Handle security actions
+  const changePassword = () => {
+    toast.info("Changing password");
+    // In a real app, you would show a modal to change the password
+  };
+
+  const enableTwoFactorAuth = () => {
+    toast.info("Enabling two-factor authentication");
+    // In a real app, you would show a modal to enable 2FA
+  };
+
+  const signOutAllDevices = () => {
+    toast.success("Signed out from all devices");
+    // In a real app, you would sign out from all devices
+  };
+
+  // Handle notification preferences
+  const saveNotificationPreferences = () => {
+    toast.success("Notification preferences saved");
+    // In a real app, you would save the notification preferences
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -127,23 +188,48 @@ const Profile = () => {
                 
                 <div className="space-y-1">
                   <TabsList className="grid grid-cols-1 h-auto">
-                    <TabsTrigger value="account" className="justify-start py-3">
+                    <TabsTrigger 
+                      value="account" 
+                      className="justify-start py-3"
+                      onClick={() => navigateToTab('account')}
+                      data-state={activeTab === 'account' ? 'active' : ''}
+                    >
                       <User className="h-4 w-4 mr-2" />
                       Account
                     </TabsTrigger>
-                    <TabsTrigger value="orders" className="justify-start py-3">
+                    <TabsTrigger 
+                      value="orders" 
+                      className="justify-start py-3"
+                      onClick={() => navigateToTab('orders')}
+                      data-state={activeTab === 'orders' ? 'active' : ''}
+                    >
                       <Package className="h-4 w-4 mr-2" />
                       Orders
                     </TabsTrigger>
-                    <TabsTrigger value="payment" className="justify-start py-3">
+                    <TabsTrigger 
+                      value="payment" 
+                      className="justify-start py-3"
+                      onClick={() => navigateToTab('payment')}
+                      data-state={activeTab === 'payment' ? 'active' : ''}
+                    >
                       <CreditCard className="h-4 w-4 mr-2" />
                       Payment Methods
                     </TabsTrigger>
-                    <TabsTrigger value="security" className="justify-start py-3">
+                    <TabsTrigger 
+                      value="security" 
+                      className="justify-start py-3"
+                      onClick={() => navigateToTab('security')}
+                      data-state={activeTab === 'security' ? 'active' : ''}
+                    >
                       <ShieldCheck className="h-4 w-4 mr-2" />
                       Security
                     </TabsTrigger>
-                    <TabsTrigger value="notifications" className="justify-start py-3">
+                    <TabsTrigger 
+                      value="notifications" 
+                      className="justify-start py-3"
+                      onClick={() => navigateToTab('notifications')}
+                      data-state={activeTab === 'notifications' ? 'active' : ''}
+                    >
                       <Bell className="h-4 w-4 mr-2" />
                       Notifications
                     </TabsTrigger>
@@ -151,7 +237,11 @@ const Profile = () => {
                 </div>
                 
                 <div className="mt-6 pt-6 border-t border-slate-200">
-                  <Button variant="outline" className="w-full gap-2 text-slate-600">
+                  <Button 
+                    variant="outline" 
+                    className="w-full gap-2 text-slate-600"
+                    onClick={handleSignOut}
+                  >
                     <LogOut className="h-4 w-4" />
                     Sign Out
                   </Button>
@@ -165,7 +255,7 @@ const Profile = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <Tabs defaultValue="account" className="w-full">
+              <Tabs value={activeTab} className="w-full">
                 <TabsContent value="account" className="space-y-6">
                   <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                     <div className="p-6 border-b border-slate-200">
@@ -312,7 +402,13 @@ const Profile = () => {
                               <div className="text-sm text-slate-600">
                                 {order.items} {order.items === 1 ? 'item' : 'items'} • ${order.total.toFixed(2)}
                               </div>
-                              <Button variant="outline" size="sm">View Details</Button>
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => viewOrderDetails(order.id)}
+                              >
+                                View Details
+                              </Button>
                             </div>
                           </div>
                         ))
@@ -361,16 +457,28 @@ const Profile = () => {
                               </div>
                             </div>
                             <div className="flex gap-2">
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => editPaymentMethod(method.id)}
+                              >
+                                Edit
+                              </Button>
                               {!method.default && (
-                                <Button variant="outline" size="sm">Remove</Button>
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => removePaymentMethod(method.id)}
+                                >
+                                  Remove
+                                </Button>
                               )}
                             </div>
                           </div>
                         ))}
                       </div>
                       
-                      <Button>Add Payment Method</Button>
+                      <Button onClick={addPaymentMethod}>Add Payment Method</Button>
                     </div>
                   </div>
                 </TabsContent>
@@ -387,7 +495,7 @@ const Profile = () => {
                     <div className="p-6 space-y-6">
                       <div>
                         <h3 className="font-semibold mb-4">Password</h3>
-                        <Button>Change Password</Button>
+                        <Button onClick={changePassword}>Change Password</Button>
                       </div>
                       
                       <div className="pt-6 border-t border-slate-200">
@@ -395,7 +503,12 @@ const Profile = () => {
                         <p className="text-slate-600 mb-4">
                           Add an extra layer of security to your account by enabling two-factor authentication.
                         </p>
-                        <Button variant="outline">Enable Two-Factor Authentication</Button>
+                        <Button 
+                          variant="outline"
+                          onClick={enableTwoFactorAuth}
+                        >
+                          Enable Two-Factor Authentication
+                        </Button>
                       </div>
                       
                       <div className="pt-6 border-t border-slate-200">
@@ -403,7 +516,11 @@ const Profile = () => {
                         <p className="text-slate-600 mb-4">
                           You're currently logged in on 1 device.
                         </p>
-                        <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700">
+                        <Button 
+                          variant="outline" 
+                          className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
+                          onClick={signOutAllDevices}
+                        >
                           Sign Out of All Devices
                         </Button>
                       </div>
@@ -453,7 +570,7 @@ const Profile = () => {
                       </div>
                       
                       <div className="mt-6 pt-6 border-t border-slate-200 flex justify-end">
-                        <Button>Save Preferences</Button>
+                        <Button onClick={saveNotificationPreferences}>Save Preferences</Button>
                       </div>
                     </div>
                   </div>
