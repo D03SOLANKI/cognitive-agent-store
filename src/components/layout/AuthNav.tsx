@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, LogOut, Settings, ShoppingCart } from 'lucide-react';
+import { User, LogOut, Settings, ShoppingCart, PlusCircle, Store } from 'lucide-react';
 
 const AuthNav = () => {
   const { user, profile, signOut, isLoading } = useAuth();
@@ -46,12 +46,23 @@ const AuthNav = () => {
 
   return (
     <div className="flex items-center gap-4">
-      <Button asChild variant="ghost" size="icon">
-        <Link to="/cart">
-          <ShoppingCart className="h-5 w-5" />
-          <span className="sr-only">Shopping Cart</span>
-        </Link>
-      </Button>
+      {profile?.user_type === 'buyer' && (
+        <Button asChild variant="ghost" size="icon">
+          <Link to="/cart">
+            <ShoppingCart className="h-5 w-5" />
+            <span className="sr-only">Shopping Cart</span>
+          </Link>
+        </Button>
+      )}
+
+      {profile?.user_type === 'developer' && (
+        <Button asChild variant="ghost" size="icon">
+          <Link to="/developers/submit">
+            <PlusCircle className="h-5 w-5" />
+            <span className="sr-only">Submit Agent</span>
+          </Link>
+        </Button>
+      )}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -69,6 +80,9 @@ const AuthNav = () => {
               <p className="text-xs text-muted-foreground truncate max-w-[200px]">
                 {user.email}
               </p>
+              <p className="text-xs text-muted-foreground">
+                {profile?.user_type === 'buyer' ? 'Buyer Account' : 'Seller Account'}
+              </p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -79,12 +93,20 @@ const AuthNav = () => {
             </Link>
           </DropdownMenuItem>
           {profile?.user_type === 'developer' && (
-            <DropdownMenuItem asChild>
-              <Link to="/developers/submit" className="cursor-pointer flex w-full items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                Submit Agent
-              </Link>
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem asChild>
+                <Link to="/developers/submit" className="cursor-pointer flex w-full items-center">
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Submit Agent
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/developers/dashboard" className="cursor-pointer flex w-full items-center">
+                  <Store className="mr-2 h-4 w-4" />
+                  Seller Dashboard
+                </Link>
+              </DropdownMenuItem>
+            </>
           )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={signOut} className="cursor-pointer">

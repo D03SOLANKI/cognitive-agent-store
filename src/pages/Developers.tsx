@@ -20,8 +20,8 @@ const Developers = () => {
 
   const handleCreateDevAccount = () => {
     if (!user) {
-      // Redirect to sign up page if not logged in
-      navigate('/signup');
+      // Redirect to sign up page with seller tab preselected
+      navigate('/signup?type=seller');
       return;
     }
     
