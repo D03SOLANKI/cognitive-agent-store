@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AgentCard from '@/components/agents/AgentCard';
-import { Agent } from '@/types/agent';
 import { getAllAgents } from '@/data/agents';
 
 const HealthcarePage = () => {
@@ -39,7 +38,7 @@ const HealthcarePage = () => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               {agents.map(agent => (
                 <AgentCard key={agent.id} agent={agent} />
