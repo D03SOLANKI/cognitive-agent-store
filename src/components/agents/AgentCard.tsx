@@ -1,10 +1,11 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Star, ShoppingCart } from 'lucide-react';
 import { Agent } from '@/types/agent';
 import { motion } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/contexts/AuthContext';
 
 interface AgentCardProps {
   agent: Agent;
@@ -13,10 +14,23 @@ interface AgentCardProps {
 const AgentCard = ({ agent }: AgentCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // Check if user is logged in
+    if (!user) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in or create an account to add items to your cart",
+        variant: "destructive"
+      });
+      navigate('/signin');
+      return;
+    }
     
     toast({
       title: "Added to cart",

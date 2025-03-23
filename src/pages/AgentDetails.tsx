@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Star, 
@@ -20,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Agent } from '@/types/agent';
 import { getAgentById } from '@/data/agents';
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/contexts/AuthContext';
 
 const AgentDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +28,8 @@ const AgentDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,22 +48,45 @@ const AgentDetails = () => {
     fetchAgent();
   }, [id]);
 
+  const checkAuthAndContinue = (action: () => void, actionName: string) => {
+    if (!user) {
+      toast({
+        title: "Sign in required",
+        description: `Please sign in or create an account to ${actionName}`,
+        variant: "destructive"
+      });
+      navigate('/signin');
+      return false;
+    }
+    
+    action();
+    return true;
+  };
+
   const handleAddToCart = () => {
-    if (agent) {
+    if (!agent) return;
+    
+    const addToCart = () => {
       toast({
         title: "Added to cart",
         description: `${agent.name} has been added to your cart`,
       });
-    }
+    };
+    
+    checkAuthAndContinue(addToCart, "add items to your cart");
   };
 
   const handleTryDemo = () => {
-    if (agent) {
+    if (!agent) return;
+    
+    const startDemo = () => {
       toast({
         title: "Demo Started",
         description: `Starting demo for ${agent.name}`,
       });
-    }
+    };
+    
+    checkAuthAndContinue(startDemo, "try this demo");
   };
 
   const handleShare = () => {
@@ -74,21 +99,29 @@ const AgentDetails = () => {
   };
 
   const handleSave = () => {
-    if (agent) {
+    if (!agent) return;
+    
+    const saveAgent = () => {
       toast({
         title: "Agent Saved",
         description: `${agent.name} has been added to your saved items`,
       });
-    }
+    };
+    
+    checkAuthAndContinue(saveAgent, "save this agent");
   };
 
   const handleContactDeveloper = () => {
-    if (agent) {
+    if (!agent) return;
+    
+    const contactDev = () => {
       toast({
         title: "Message Sent",
         description: `Your message to the developer of ${agent.name} has been sent`,
       });
-    }
+    };
+    
+    checkAuthAndContinue(contactDev, "contact the developer");
   };
 
   const formatPrice = (pricing?: Agent['pricing']) => {
@@ -176,8 +209,8 @@ const AgentDetails = () => {
                     }`}
                   />
                   <img 
-                    src={agent.imageUrl} 
-                    alt={agent.name}
+                    src={agent?.imageUrl} 
+                    alt={agent?.name}
                     className={`w-full h-full object-cover transition-opacity duration-500 ${
                       isImageLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
@@ -188,20 +221,20 @@ const AgentDetails = () => {
                 <div className="p-6">
                   <div className="flex flex-wrap justify-between items-start gap-4 mb-6">
                     <div>
-                      <h1 className="text-3xl font-bold mb-2">{agent.name}</h1>
+                      <h1 className="text-3xl font-bold mb-2">{agent?.name}</h1>
                       <div className="flex items-center gap-4 flex-wrap">
                         <div className="flex items-center">
                           <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                          <span className="font-medium">{agent.rating}</span>
-                          <span className="text-slate-500 ml-1">({agent.reviewCount} reviews)</span>
+                          <span className="font-medium">{agent?.rating}</span>
+                          <span className="text-slate-500 ml-1">({agent?.reviewCount} reviews)</span>
                         </div>
                         <div className="text-slate-500">
                           <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
-                            {agent.category}
+                            {agent?.category}
                           </span>
                         </div>
                         <div className="text-slate-500 text-sm">
-                          By <a href="#" className="text-blue-600 hover:underline">{agent.developer}</a>
+                          By <a href="#" className="text-blue-600 hover:underline">{agent?.developer}</a>
                         </div>
                       </div>
                     </div>
@@ -249,13 +282,13 @@ const AgentDetails = () => {
                       <div className="space-y-6">
                         <div>
                           <h3 className="text-lg font-medium mb-3">Description</h3>
-                          <p className="text-slate-600 whitespace-pre-line">{agent.description}</p>
+                          <p className="text-slate-600 whitespace-pre-line">{agent?.description}</p>
                         </div>
                         
                         <div>
                           <h3 className="text-lg font-medium mb-3">Tags</h3>
                           <div className="flex flex-wrap gap-2">
-                            {agent.tags.map((tag, index) => (
+                            {agent?.tags.map((tag, index) => (
                               <span 
                                 key={index}
                                 className="bg-slate-100 text-slate-800 px-3 py-1 rounded-full text-sm"
@@ -324,14 +357,14 @@ const AgentDetails = () => {
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm text-slate-600">Pricing</span>
-                    <span className="text-2xl font-bold text-blue-600">{formatPrice(agent.pricing)}</span>
+                    <span className="text-2xl font-bold text-blue-600">{agent ? formatPrice(agent.pricing) : ''}</span>
                   </div>
                   <div className="text-sm text-slate-500 mb-4">
-                    {agent.pricing.model === 'Subscription' && 'Billed monthly. Cancel anytime.'}
-                    {agent.pricing.model === 'Pay-per-use' && 'Pay only for what you use.'}
-                    {agent.pricing.model === 'Freemium' && 'Free tier with premium features.'}
-                    {agent.pricing.model === 'One-time' && 'One-time purchase, lifetime access.'}
-                    {agent.pricing.model === 'Free' && 'No payment required.'}
+                    {agent?.pricing.model === 'Subscription' && 'Billed monthly. Cancel anytime.'}
+                    {agent?.pricing.model === 'Pay-per-use' && 'Pay only for what you use.'}
+                    {agent?.pricing.model === 'Freemium' && 'Free tier with premium features.'}
+                    {agent?.pricing.model === 'One-time' && 'One-time purchase, lifetime access.'}
+                    {agent?.pricing.model === 'Free' && 'No payment required.'}
                   </div>
                   <Button 
                     className="w-full h-12 text-base mb-3"
@@ -363,7 +396,7 @@ const AgentDetails = () => {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-500">Category</span>
-                      <span>{agent.category}</span>
+                      <span>{agent?.category}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-500">Compatibility</span>
