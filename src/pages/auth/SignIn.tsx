@@ -19,6 +19,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
+import { supabase } from '@/integrations/supabase/client';
 
 const signInSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),

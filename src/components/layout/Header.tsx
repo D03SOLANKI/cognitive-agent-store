@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import SearchBar from "@/components/ui/SearchBar";
+import AuthNav from '@/components/layout/AuthNav';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -118,43 +119,7 @@ const Header = () => {
             <SearchBar expanded={false} />
           </div>
           
-          <Link to="/cart">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative" 
-              aria-label="Cart"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-medium">
-                2
-              </span>
-            </Button>
-          </Link>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar className="hidden md:flex cursor-pointer">
-                <AvatarFallback className="bg-blue-100 text-blue-800">
-                  <User className="h-4 w-4" />
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem>
-                <Link to="/profile" className="w-full">Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to="/profile?tab=orders" className="w-full">Orders</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to="/profile?tab=settings" className="w-full">Settings</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600">
-                Sign Out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AuthNav />
           
           <Button 
             variant="ghost" 

@@ -61,7 +61,7 @@ const SignUp = () => {
       password: '',
       confirmPassword: '',
       userType: 'buyer',
-      agreeTerms: false,
+      agreeTerms: false as unknown as true, // This will be fixed by setting it explicitly in the form
     },
   });
 

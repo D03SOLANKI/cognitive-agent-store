@@ -1,16 +1,45 @@
 
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Developers = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleCreateDevAccount = () => {
+    if (!user) {
+      // Redirect to sign up page if not logged in
+      navigate('/signup');
+      return;
+    }
+    
+    // If already logged in but not as developer, navigate to profile to change settings
+    if (profile && profile.user_type !== 'developer') {
+      toast({
+        title: "Update your account type",
+        description: "You need to update your account to developer type in your profile settings.",
+      });
+      navigate('/profile?tab=settings');
+      return;
+    }
+    
+    // If already a developer, navigate to submit agent page
+    if (profile && profile.user_type === 'developer') {
+      navigate('/developers/submit');
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -43,7 +72,13 @@ const Developers = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full">Create Developer Account</Button>
+                  <Button className="w-full" onClick={handleCreateDevAccount}>
+                    {!user 
+                      ? "Create Developer Account" 
+                      : profile?.user_type === 'developer'
+                        ? "Submit AI Agent"
+                        : "Upgrade to Developer Account"}
+                  </Button>
                 </motion.div>
               </div>
               
@@ -63,7 +98,13 @@ const Developers = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button variant="outline" className="w-full">Read Documentation</Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => navigate('/developers/docs')}
+                  >
+                    Read Documentation
+                  </Button>
                 </motion.div>
               </div>
             </div>
@@ -116,7 +157,17 @@ const Developers = () => {
               Join our growing community of AI developers and start monetizing your innovations today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="px-8">Create Developer Account</Button>
+              <Button 
+                size="lg" 
+                className="px-8"
+                onClick={handleCreateDevAccount}
+              >
+                {!user 
+                  ? "Create Developer Account" 
+                  : profile?.user_type === 'developer'
+                    ? "Submit AI Agent"
+                    : "Upgrade to Developer Account"}
+              </Button>
               <Button variant="outline" size="lg" className="px-8">
                 <Link to="/">Explore the Marketplace</Link>
               </Button>
